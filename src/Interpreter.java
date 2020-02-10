@@ -1,9 +1,9 @@
 public class Interpreter  {
     Stack stack;
     int program_counter;
-    int top; //top of the stack; return value
+    int top;
     String[] args;
-    int numInstructions;
+//    int numInstructions;
     int numExecutions;
     protected int EXECUTION_LIMIT = 1000000000;
 
@@ -13,7 +13,7 @@ public class Interpreter  {
         this.stack = stack;
         this.program_counter = 0;
         this.top=  0;
-        this.numInstructions = 0;
+//        this.numInstructions = 0;
         numExecutions = 0;
 
     }
@@ -29,10 +29,11 @@ public class Interpreter  {
 
     public int execute(){
         //while the program counter is within bounds
-        while(!(program_counter < 0) && !(program_counter >= args.length)){
+        while((program_counter >= 0) && (program_counter < args.length)){
 
             //increment execution counter
             numExecutions++;
+
 
             //check number of executions to make sure we havn't reached the limit
             if(numExecutions == EXECUTION_LIMIT){
@@ -70,44 +71,7 @@ public class Interpreter  {
         System.out.println(top);
         return top;
     }
-//    public int execute(){
-//
-////        for (program_counter = 0; program_counter < args.length; ++program_counter){
-////            System.out.println("program counter: " + program_counter);
-////            stack.printStack();
-////            execution_limit++;
-////
-////            //check the program counter to ensure not over 1B instructions
-////            if(execution_limit == 1000000000){
-////                System.out.println("Limit Reached!");
-////                top = getTop();
-////                System.out.println(top);
-////                return top;
-////            }
-////
-////            //try to parse as int and if successful push onto stack
-////            try{
-////                int plate = Integer.parseInt(args[program_counter]);
-////                System.out.println(args[program_counter]);
-////                stack.push(plate);
-////            }
-////            //this means it was not an integer so it must be either an
-////            //integer constant, instruction, or looping instruction
-////            catch (NumberFormatException e){
-////                //numInstructions++;
-////                instructions(args[program_counter]);
-////            }
-////
-////
-////        }
-////        if(stack.size()<1){
-////            System.out.println("Empty Stack Return value is null");
-////            return 0;
-////        }
-////        top = getTop();
-////        System.out.println(top);
-////        return top;
-//    }
+
 
     /**
      * instructions()
@@ -118,11 +82,6 @@ public class Interpreter  {
      */
     public void instructions(String instruction){
         String inst = instruction;
-//        System.out.println("program counter: " + program_counter);
-//        stack.printStack();
-//        System.out.println(inst);
-
-//        System.out.println("program counter: " + program_counter);
 
         switch(inst){
             case "+":
@@ -341,7 +300,6 @@ public class Interpreter  {
         }
         int top = stack.pop();
         program_counter += top;
-        // program_counter++;
     }
 
     /**
@@ -361,7 +319,6 @@ public class Interpreter  {
     }
 
     public int getTop(){
-
         top = stack.top();
         return top;
     }
